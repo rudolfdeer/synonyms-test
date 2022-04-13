@@ -1,0 +1,11 @@
+{
+  "name": "vacuumlabs-synonyms",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "commander": "^8.3.0"
+  }
+}
