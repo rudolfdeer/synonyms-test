@@ -10,7 +10,7 @@ program
   .parse(process.argv);
 
 const { inputFile, outputFile } = program.opts();
-const inputStream = inputFile ? fs.createReadStream(inputFile) : process.stdin;
+const inputStream = inputFile ? fs.createReadStream(inputFile, { highWaterMark: 1000000 }) : process.stdin;
 const transformStream = transformer(checkIfSynonyms);
 const outputStream = outputFile ? fs.createWriteStream(outputFile) : process.stdout;
 

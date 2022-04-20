@@ -3,33 +3,34 @@ export const checkIfSynonyms = (dictionary, queries) => {
 
   for (let i = 0; i < dictionary.length; i++) {
     const arr = [];
+    const currentDictPair = dictionary[i];
 
-    if (!(dictionary[i][0] in map)) {
-      dictionary[i].forEach((el) => arr.push(el));
-
-      map[dictionary[i][0]] = arr;
+    if (!(currentDictPair[0] in map)) {
+      currentDictPair.forEach((el) => arr.push(el));
+      map[currentDictPair[0]] = arr;
     } else {
-      dictionary[i].forEach((el) => map[dictionary[i][0]].push(el));
+      currentDictPair.forEach((el) => map[currentDictPair[0]].push(el));
     }
 
-    if (!(dictionary[i][1] in map)) {
-      dictionary[i].forEach((el) => arr.push(el));
-      map[dictionary[i][1]] = arr;
+    if (!(currentDictPair[1] in map)) {
+      currentDictPair.forEach((el) => arr.push(el));
+      map[currentDictPair[1]] = arr;
     } else {
-      dictionary[i].forEach((el) => map[dictionary[i][1]].push(el));
+      currentDictPair.forEach((el) => map[currentDictPair[1]].push(el));
     }
   }
 
   for (let key in map) {
-    const add = [];
-    const current = map[key]; //[]
+    const arr = [];
+    const currentMapValues = map[key];
 
-    current.forEach((word) => {
-      const values = map[word].filter((el) => !current.includes(el));
-      values.forEach((el) => add.push(el));
+    currentMapValues.forEach((word) => {
+      const values = map[word].filter((el) => !currentMapValues.includes(el));
+      values.forEach((el) => arr.push(el));
     });
-    const arr = [...new Set(add)];
-    arr.forEach((el) => current.push(el));
+
+    const add = [...new Set(arr)];
+    add.forEach((el) => currentMapValues.push(el));
   }
 
   for (let key in map) {
@@ -40,8 +41,6 @@ export const checkIfSynonyms = (dictionary, queries) => {
   const result = queries.map((query, k) => {
     const firstWord = query[0];
     const secondWord = query[1];
-
-    console.log('to check', k, firstWord, secondWord);
 
     if (firstWord === secondWord) return 'synonyms';
 
