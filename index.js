@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { program } from 'commander';
 import { pipeline } from 'stream';
-import { transformer } from './transformer.js';
-import { checkIfSynonyms } from './checkIfSynonyms.js';
+import { transformer } from './src/transformer.js';
+import { checkIfSynonyms } from './src/checkIfSynonyms.js';
 
 program
   .option('--inputFile <file>', 'input file')
