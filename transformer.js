@@ -21,7 +21,7 @@ class Transformer extends Transform {
 
     const testCases = [];
 
-    for (let i = 0; i <= this.values.length; i++) {
+    for (let i = 0; i < this.values.length; i++) {
       let num;
 
       if (Number(this.values[i])) {
@@ -36,6 +36,7 @@ class Transformer extends Transform {
     }
 
     for (let i = 0; i < testCases.length; i += 2) {
+     
       let res = this.func(testCases[i], testCases[i+1]);
       this.res.push(res);
     }
