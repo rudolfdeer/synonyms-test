@@ -2,7 +2,6 @@ import fs from 'fs';
 import { program } from 'commander';
 import { pipeline } from 'stream';
 import { transformer } from './src/transformer.js';
-import { checkIfSynonyms } from './src/checkIfSynonyms.mjs';
 
 program
   .option('--inputFile <file>', 'input file')
