@@ -10,14 +10,14 @@ class Transformer extends Transform {
 
   _transform(chunk, encoding, callback) {
     const inputString = chunk.toString();
-    this.rows = inputString.trim().split('\n');
-    this.values = this.rows.map((row) => {
+    const rows = inputString.trim().split('\n');
+    const values = rows.map((row) => {
       if (Number(row)) return Number(row);
       return row.toLowerCase().split(' ');
     });
-    this.values.shift();
+    values.shift();
 
-    const testCases = createTestCases(this.values);
+    const testCases = createTestCases(values);
 
     for (let i = 0, length = testCases.length; i < length; i += 2) {
       let res = checkIfSynonyms(testCases[i], testCases[i + 1]);
