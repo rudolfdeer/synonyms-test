@@ -1,39 +1,26 @@
 import { Transform } from 'stream';
+import { checkIfSynonyms } from './checkIfSynonyms.mjs';
+import { createTestCases } from './createTestCases.mjs';
 
 class Transformer extends Transform {
-  constructor(func) {
+  constructor() {
     super();
-    this.func = func;
     this.res = [];
   }
 
   _transform(chunk, encoding, callback) {
     const inputString = chunk.toString();
     this.rows = inputString.trim().split('\n');
-    this.values = this.rows.map((el) => {
-      if (Number(el)) return Number(el);
-      return el.toLowerCase().split(' ');
+    this.values = this.rows.map((row) => {
+      if (Number(row)) return Number(row);
+      return row.toLowerCase().split(' ');
     });
     this.values.shift();
 
-    const testCases = [];
+    const testCases = createTestCases(this.values);
 
-    for (let i = 0; i < this.values.length; i++) {
-      let num;
-
-      if (Number(this.values[i])) {
-        num = this.values[i];
-        let arr = [];
-
-        for (let k = 1; k <= num; k++) {
-          arr.push(this.values[i + k]);
-        }
-        testCases.push(arr);
-      }
-    }
-
-    for (let i = 0; i < testCases.length; i += 2) {
-      let res = this.func(testCases[i], testCases[i + 1]);
+    for (let i = 0, length = testCases.length; i < length; i += 2) {
+      let res = checkIfSynonyms(testCases[i], testCases[i + 1]);
       this.res.push(res);
     }
 
@@ -43,6 +30,6 @@ class Transformer extends Transform {
   }
 }
 
-const transformer = (func) => new Transformer(func);
+const transformer = () => new Transformer();
 
 export { transformer };
